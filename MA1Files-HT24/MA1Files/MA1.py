@@ -51,26 +51,49 @@ def harmonic(n: int) -> float:
         return 1/n + harmonic(n-1)
 
 def get_binary(x: int) -> str:         
+    if x < 0:
+        return "-" + get_binary(-x)
     if x == 0:
         return "0"
-    elif 1:
-        2
+    elif x == 1:
+        return "1"
+    
+    return get_binary(x//2) + str(x % 2)
 
 
-def reverse_string(s: str) -> str:        
-    """ Returns the s reversed """
-    pass
-
-
-def largest(a: iter):                     
-    """ Returns the largest element in a"""
-    pass
-
+def reverse_string(s: str) -> str: 
+    if len(s) == 0:
+        return ""
+    if len(s) == 1:
+        return s     
+    else:
+        return s[-1] + reverse_string(s[:-1])
+              
+def largest(a: iter):                   
+    if len(a) == 1:
+        return a[0]
+    else:
+        return a[0] if a[0] > largest(a[1:]) else largest(a[1:])
 
 def count(x, s: list) -> int:                
     """ Counts the number of occurences of x on all levels in s"""
-    pass
+    print(s)
+    if len(s) == 0:
+        print("if 1")
+        return 0
+    if type(s[0]) == list:
+        print("if 2")
+        count(x, s[0])
+    if len(s) == 1:
+        print("if 3")
 
+        return 1 if s[0] == x else 0
+    else:
+        print("if 4")
+
+        return 1 + count(x,s[1:]) if s[0] == x else count(x,s[1:])
+
+print(count(3, [[3, [3]],2,3]))
 
 def bricklek(f: str, t: str, h: str, n: int) -> str:  
     """ Returns a string of instruction ow to move the tiles """
@@ -94,11 +117,12 @@ def fib(n: int) -> int:
 
 
 def main():
-    print('\nCode that demonstates my implementations\n')
+    # print('\nCode that demonstates my implementations\n')
 
-    print('\n\nCode for analysing fib and fib_mem\n')
+    # print('\n\nCode for analysing fib and fib_mem\n')
 
-    print('\nBye!')
+    # print('\nBye!')
+    1
 
 
 if __name__ == "__main__":
