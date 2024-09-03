@@ -54,7 +54,7 @@ def get_binary(x: int) -> str:
     if x == 0:
         return "0"
     elif 1:
-        1
+        2
 
 
 def reverse_string(s: str) -> str:        
