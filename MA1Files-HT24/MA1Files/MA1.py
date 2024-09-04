@@ -77,23 +77,16 @@ def largest(a: iter):
 
 def count(x, s: list) -> int:                
     """ Counts the number of occurences of x on all levels in s"""
-    print(s)
-    if len(s) == 0:
-        print("if 1")
+    if type(s) == list and len(s) == 0:
         return 0
-    if type(s[0]) == list:
-        print("if 2")
-        count(x, s[0])
-    if len(s) == 1:
-        print("if 3")
-
-        return 1 if s[0] == x else 0
+    if s == x or type(s) != list:
+        return 1 if s == x else 0    
+    elif len(s) > 1:
+        return count(x,s[0]) + count(x,s[1:])
     else:
-        print("if 4")
+         return count(x, s[0])
+        
 
-        return 1 + count(x,s[1:]) if s[0] == x else count(x,s[1:])
-
-print(count(3, [[3, [3]],2,3]))
 
 def bricklek(f: str, t: str, h: str, n: int) -> str:  
     """ Returns a string of instruction ow to move the tiles """
