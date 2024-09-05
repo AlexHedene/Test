@@ -90,7 +90,33 @@ def count(x, s: list) -> int:
 
 def bricklek(f: str, t: str, h: str, n: int) -> str:  
     """ Returns a string of instruction ow to move the tiles """
-    pass
+#       Write a function def bricklek(from, to, help, n) which returns a list of in-
+#       structions on how to move the tiles. The parameters from, to and help are
+#       strings that identify the different piles and n is the number of tiles.
+#       The call bricklek(’f’, ’t’, ’h’, 2) should return the list
+#       [’f->h’, ’f->t’, ’h->t’]
+#       which should be read as
+#       “move from f to h, move from f to t, move from h to t”.
+#       Each element in the list is thus a string that indicates from which pile and to
+#       which pile tiles should be moved. Since it is always the top tile that is to be
+#       moved, no other information is needed.
+#       It is important that the strings look exactly as in the example and do not
+#       contain any blank spaces!
+#       Hint: The function does not need more than 5 lines, including the def line!
+# 1: f->t
+# 2: f->h, f->t, h->t
+# 2: bricklek(f, h, t, n-1) + bricklek(f, t, h, 1) + bricklek(h, t, f, n-1)
+# 3: f->t, f->h, t->h, f->t, h->f, h->t, f->t # Ändra plats på f,t,h 
+# 3: bricklek(f, h, t, n-1) + bricklek(f, t, h, 1) + bricklek(h, t, f, n-1)
+# 4: 
+    if n == 0:
+        return []
+    if n == 1:
+        return [f + "->" + t]
+    else:
+        return bricklek(f, h, t, n-1) + bricklek(f, t, h, 1) + bricklek(h, t, f, n-1)
+    
+#print(bricklek('f','t','h',3))  
 
 
 def fib(n: int) -> int:                      
