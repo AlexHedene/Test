@@ -84,39 +84,21 @@ def count(x, s: list) -> int:
     elif len(s) > 1:
         return count(x,s[0]) + count(x,s[1:])
     else:
-         return count(x, s[0])
-        
+         return count(x, s[0])       
 
 
 def bricklek(f: str, t: str, h: str, n: int) -> str:  
-    """ Returns a string of instruction ow to move the tiles """
-#       Write a function def bricklek(from, to, help, n) which returns a list of in-
-#       structions on how to move the tiles. The parameters from, to and help are
-#       strings that identify the different piles and n is the number of tiles.
-#       The call bricklek(’f’, ’t’, ’h’, 2) should return the list
-#       [’f->h’, ’f->t’, ’h->t’]
-#       which should be read as
-#       “move from f to h, move from f to t, move from h to t”.
-#       Each element in the list is thus a string that indicates from which pile and to
-#       which pile tiles should be moved. Since it is always the top tile that is to be
-#       moved, no other information is needed.
-#       It is important that the strings look exactly as in the example and do not
-#       contain any blank spaces!
-#       Hint: The function does not need more than 5 lines, including the def line!
 # 1: f->t
 # 2: f->h, f->t, h->t
 # 2: bricklek(f, h, t, n-1) + bricklek(f, t, h, 1) + bricklek(h, t, f, n-1)
 # 3: f->t, f->h, t->h, f->t, h->f, h->t, f->t # Ändra plats på f,t,h 
 # 3: bricklek(f, h, t, n-1) + bricklek(f, t, h, 1) + bricklek(h, t, f, n-1)
-# 4: 
     if n == 0:
         return []
     if n == 1:
         return [f + "->" + t]
-    else:
-        return bricklek(f, h, t, n-1) + bricklek(f, t, h, 1) + bricklek(h, t, f, n-1)
+    return bricklek(f, h, t, n-1) + bricklek(f, t, h, 1) + bricklek(h, t, f, n-1)
     
-#print(bricklek('f','t','h',3))  
 
 
 def fib(n: int) -> int:                      
@@ -138,10 +120,33 @@ def fib(n: int) -> int:
 def main():
     # print('\nCode that demonstates my implementations\n')
 
+    # Time for bricklek n = 22-26
+    # I know that this is unnessesary, but i read question 8 wrong. So now i calculated the actualk time on my computer
+    #  it would take to run the script with 50 tiles to.
+    # for i in range(22,27):
+    #     start_time_bricklek = time.perf_counter()
+    #     bricklek('f', 't', 'h', i)
+    #     end_time_bricklek = time.perf_counter()
+    #     c = (end_time_bricklek - start_time_bricklek)/(2**i - 1)
+
+
+
     # print('\n\nCode for analysing fib and fib_mem\n')
+    # Calculates the constant to find the time for each n
+    start_time = time.perf_counter()
+    fib(37)
+    end_time = time.perf_counter()
+    c = (end_time - start_time)/(1.618**37)
+
+    for i in range(35, 40):
+        start_time = time.perf_counter()
+        fib(i)
+        end_time = time.perf_counter()
+        print(f'Theoretical time: {c * 1.618**i}s, Actual time: {end_time - start_time}s')
+    
 
     # print('\nBye!')
-    1
+    
 
 
 if __name__ == "__main__":
@@ -155,7 +160,21 @@ if __name__ == "__main__":
   
   
   Exercise 8: Time for the tile game with 50 tiles:
+  The tile game is solved by solving one problem of complexity 1, and two with complexity n-1 for each n.
+  This gives the time for h(n) = 1, if n <= 1, and h(n) = 1 + 2h(n-1), if n > 1
+  By replacing replacing h(n-1) with 1 + 2*h(n-2) we get
+  h(n) = 1 + 2 + 2^2h(n-2), this can then be generalized to h(n) = 1 + 2 + ... 2^(k-1) + 2^k h(n-k) 
+  Let k be n-1, and we get h(n) = 2^(n-1)h(1) + 2^(n-2) + ... + 2^0.
+  Since h(1) = 1, we get h(n) = 2^n - 1
+
+  I will guess that the time will increase as c * (2^n-1). To find c, i take the time for n = 22, 23, 24, 25 ,26
+  and devide by h(n) to find the constant c. This gave a value of c = 3.8e-07.
+  The time to move 50 tiles is therefore 3.8e-07 * (2^50 - 1) which is roughly 13.57 years on my computer.
+
+  I did see now that i should assume each tile takes 1 second to move. This means that t(n) = h(n) which means that the
+  total time for 50 tiles would be (2^50 + 1)/(365*24*3600) = 35.70 * 10^6 years
   
+
   
   
   
