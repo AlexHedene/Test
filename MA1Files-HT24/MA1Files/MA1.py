@@ -78,19 +78,17 @@ def largest(a: iter):
 
 def count(x, s: list) -> int:                
     """ Counts the number of occurences of x on all levels in s"""
-    if type(s) == list and len(s) == 0:
+    if len(s) == 0:
         return 0
-    if s == x or type(s) != list:
-        return 1 if s == x else 0    
-    elif len(s) > 1:
+    if len(s) == 1:
+        return 1 if x == s[0] else 0
+    elif x == s[0]:
+        return 1 + count(x,s[1:])
+    elif type(s[0]) == list:
         return count(x,s[0]) + count(x,s[1:])
     else:
-         return count(x, s[0])       
-
-def count2(x, s: list) -> int:                
-    """ Counts the number of occurences of x on all levels in s"""
-    1
-
+        return 1 + count(x,s[1:]) if x == s[0] else count(x,s[1:])
+ 
 
 def bricklek(f: str, t: str, h: str, n: int) -> str:  
 # 1: f->t
@@ -142,7 +140,7 @@ def main():
     #     c = (end_time_bricklek - start_time_bricklek)/(2**i - 1)
 
 
-    """"
+
     print('\n\nCode for analysing fib\n')
     # Calculates the constant to find the time for each n
     start_time = time.perf_counter()
@@ -156,18 +154,17 @@ def main():
         start_time = time.perf_counter()
         fib(i)
         end_time = time.perf_counter()
-        print(f"Theoretical time: {(c * 1.618**i):.2f}s, Actual time: {(end_time - start_time):.2f}s")
+        print(f"Theoretical time: {(c * 1.618**i):.2e}s, Actual time: {(end_time - start_time):.2e}s")
         c_array.append((end_time - start_time)/(1.618**i))
     c_mean = sum(c_array)/len(c_array)
-    print(f"The avarage c value for my computer for n = 35 - 39 is {(c_mean*10**8):.2f}*10^-8 which results in the time function t(n) = ({(c_mean*10**8):.2f}*10^-8)*1.618^n")
+    print(f"The avarage c value for my computer for n = 35 - 39 is {(c_mean):.2e} which results in the time function t(n) = {(c_mean):.2e}*1.618^n")
     print(f"This results in a calculated time for fib(50) = {c_mean*1.618**50/(60):.2f} minutes, and fib(100) = {c_mean*1.618**100/(365*24*3600*10**6):.2f}*10^6 years")
-    """
     print('\n\nCode for analysing fib_mem\n')
     
     start_time = time.perf_counter()
     fib_mem(100)
     end_time = time.perf_counter()
-    print(f"The total time for fib_mem(100) = {end_time - start_time}")
+    print(f"The total time for fib_mem(100) = {end_time - start_time:.3e} seconds")
     # print('\nBye!')
     
 
