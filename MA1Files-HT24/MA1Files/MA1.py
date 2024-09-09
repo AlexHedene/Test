@@ -69,11 +69,12 @@ def reverse_string(s: str) -> str:
     else:
         return s[-1] + reverse_string(s[:-1])
               
-def largest(a: iter):                   
+def largest(a: iter):
     if len(a) == 1:
         return a[0]
     else:
         return a[0] if a[0] > largest(a[1:]) else largest(a[1:])
+
 
 def count(x, s: list) -> int:                
     """ Counts the number of occurences of x on all levels in s"""
@@ -85,6 +86,10 @@ def count(x, s: list) -> int:
         return count(x,s[0]) + count(x,s[1:])
     else:
          return count(x, s[0])       
+
+def count2(x, s: list) -> int:                
+    """ Counts the number of occurences of x on all levels in s"""
+    1
 
 
 def bricklek(f: str, t: str, h: str, n: int) -> str:  
@@ -116,12 +121,19 @@ def fib(n: int) -> int:
     else:
         return fib(n-1) + fib(n-2)
 
+def fib_mem(n:int) -> int:
+    memory = {0:0, 1:1}
+    def fib(n: int) -> int:
+        if n not in memory:
+            memory[n] = fib(n-1) + fib(n-2)
+        return memory[n]
+    return fib(n)
 
 def main():
     # print('\nCode that demonstates my implementations\n')
 
     # Time for bricklek n = 22-26
-    # I know that this is unnessesary, but i read question 8 wrong. So now i calculated the actualk time on my computer
+    # I know that this is unnessesary, but i read question 8 wrong. So now i calculated the actual time on my computer
     #  it would take to run the script with 50 tiles to.
     # for i in range(22,27):
     #     start_time_bricklek = time.perf_counter()
@@ -130,21 +142,32 @@ def main():
     #     c = (end_time_bricklek - start_time_bricklek)/(2**i - 1)
 
 
-
-    # print('\n\nCode for analysing fib and fib_mem\n')
+    """"
+    print('\n\nCode for analysing fib\n')
     # Calculates the constant to find the time for each n
     start_time = time.perf_counter()
-    fib(37)
+    fib(39)
     end_time = time.perf_counter()
-    c = (end_time - start_time)/(1.618**37)
+    c = (end_time - start_time)/(1.618**39)
 
+    c_array = []
+    print("The next lines will compare the actual times of fib(35) - fib(39) with a calculated value of c*1.618^n")   
     for i in range(35, 40):
         start_time = time.perf_counter()
         fib(i)
         end_time = time.perf_counter()
-        print(f'Theoretical time: {c * 1.618**i}s, Actual time: {end_time - start_time}s')
+        print(f"Theoretical time: {(c * 1.618**i):.2f}s, Actual time: {(end_time - start_time):.2f}s")
+        c_array.append((end_time - start_time)/(1.618**i))
+    c_mean = sum(c_array)/len(c_array)
+    print(f"The avarage c value for my computer for n = 35 - 39 is {(c_mean*10**8):.2f}*10^-8 which results in the time function t(n) = ({(c_mean*10**8):.2f}*10^-8)*1.618^n")
+    print(f"This results in a calculated time for fib(50) = {c_mean*1.618**50/(60):.2f} minutes, and fib(100) = {c_mean*1.618**100/(365*24*3600*10**6):.2f}*10^6 years")
+    """
+    print('\n\nCode for analysing fib_mem\n')
     
-
+    start_time = time.perf_counter()
+    fib_mem(100)
+    end_time = time.perf_counter()
+    print(f"The total time for fib_mem(100) = {end_time - start_time}")
     # print('\nBye!')
     
 
@@ -179,7 +202,10 @@ if __name__ == "__main__":
   
   
   Exercise 9: Time for Fibonacci:
-
+    The t(n) function for my stationary computer is ~(7.67*10^-8)*1.618^n. 
+    This results in:
+    t(50) = 35.96 minutes
+    fib(100) = 1.92*10^6 years
 
   
   
