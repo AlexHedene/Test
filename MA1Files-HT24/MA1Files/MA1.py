@@ -37,12 +37,12 @@ If your Python doesn't allow type hints you should update to a more modern versi
 import time
 import math
 
-def multiply(m: int, n: int) -> int:  
+def multiply(m: int, n: int) -> int: 
     if m == 0 or n == 0:
         return 0
     else:
         return n + multiply(m-1,n)
-    
+  
 
 def harmonic(n: int) -> float:              
     if n == 1 or n == 0:
@@ -81,14 +81,12 @@ def count(x, s: list) -> int:
     """ Counts the number of occurences of x on all levels in s"""
     if len(s) == 0:
         return 0
-    if len(s) == 1:
-        return 1 if x == s[0] else 0
     elif x == s[0]:
         return 1 + count(x,s[1:])
     elif type(s[0]) == list:
         return count(x,s[0]) + count(x,s[1:])
     else:
-        return 1 + count(x,s[1:]) if x == s[0] else count(x,s[1:])
+        return count(x,s[1:])
  
 
 def bricklek(f: str, t: str, h: str, n: int) -> str:  
@@ -99,9 +97,7 @@ def bricklek(f: str, t: str, h: str, n: int) -> str:
 # 3: bricklek(f, h, t, n-1) + bricklek(f, t, h, 1) + bricklek(h, t, f, n-1)
     if n == 0:
         return []
-    if n == 1:
-        return [f + "->" + t]
-    return bricklek(f, h, t, n-1) + bricklek(f, t, h, 1) + bricklek(h, t, f, n-1)
+    return bricklek(f, h, t, n-1) + [f + "->" + t] + bricklek(h, t, f, n-1)
     
 
 
@@ -129,16 +125,7 @@ def fib_mem(n:int) -> int:
     return fib(n)
 
 def main():
-    # print('\nCode that demonstates my implementations\n')
-
-    # Time for bricklek n = 22-26
-    # I know that this is unnessesary, but i read question 8 wrong. So now i calculated the actual time on my computer
-    #  it would take to run the script with 50 tiles to.
-    # for i in range(22,27):
-    #     start_time_bricklek = time.perf_counter()
-    #     bricklek('f', 't', 'h', i)
-    #     end_time_bricklek = time.perf_counter()
-    #     c = (end_time_bricklek - start_time_bricklek)/(2**i - 1)
+    print('\nCode that demonstates my implementations\n')
 
 
 
@@ -181,22 +168,10 @@ if __name__ == "__main__":
   
   
   Exercise 8: Time for the tile game with 50 tiles:
-  The tile game is solved by solving one problem of complexity 1, and two with complexity n-1 for each n.
-  This gives the time for h(n) = 1, if n <= 1, and h(n) = 1 + 2h(n-1), if n > 1
-  By replacing replacing h(n-1) with 1 + 2*h(n-2) we get
-  h(n) = 1 + 2 + 2^2h(n-2), this can then be generalized to h(n) = 1 + 2 + ... 2^(k-1) + 2^k h(n-k) 
-  Let k be n-1, and we get h(n) = 2^(n-1)h(1) + 2^(n-2) + ... + 2^0.
-  Since h(1) = 1, we get h(n) = 2^n - 1
-
-  I will guess that the time will increase as c * (2^n-1). To find c, i take the time for n = 22, 23, 24, 25 ,26
-  and devide by h(n) to find the constant c. This gave a value of c = 3.8e-07.
-  The time to move 50 tiles is therefore 3.8e-07 * (2^50 - 1) which is roughly 13.57 years on my computer.
-
-  I did see now that i should assume each tile takes 1 second to move. This means that t(n) = h(n) which means that the
-  total time for 50 tiles would be (2^50 + 1)/(365*24*3600) = 35.70 * 10^6 years
   
+    I should assume each tile takes 1 second to move. This means that t(n) = h(n) = 2^n - 1 which means that the
+    total time for 50 tiles would be (2^50 + 1)/(365*24*3600) = 35.70 * 10^6 years
 
-  
   
   
   Exercise 9: Time for Fibonacci:
@@ -210,8 +185,6 @@ if __name__ == "__main__":
   Exercise 10: Time for fib_mem:
     fubonachi number 100: 354224848179261915075
     The total time for fib_mem(100) = 4.810e-05 seconds
-  
-  
   
   
   Exercise 11: Comparison sorting methods:
