@@ -50,7 +50,8 @@ def harmonic(n: int) -> float:
     else:
         return 1/n + harmonic(n-1)
 
-def get_binary(x: int) -> str:         
+def get_binary(x: int) -> str:
+    # 1: 1,  2: 10,  3: 11,  4: 100,  5: 101,  6: 110,  7: 111,  8: 1000         
     if x < 0:
         return "-" + get_binary(-x)
     if x == 0:
